@@ -1,7 +1,5 @@
 # Junk Directory Scripts
 
-**Note:** To use these scripts, copy the desired script file to your computer and and make ```Linux.sh``` for linux or ```Windows.ps1``` for windows and then  follow the instructions below to run it on your system.
-
 This directory contains two scripts for different operating systems to help automate tasks or run commands specific to your environment.
 
 ## Scripts
@@ -33,7 +31,7 @@ This PowerShell script provides an interactive, user-friendly system cleaner for
 - Uses a modern UI with colored output and prompts.
 
 ## Usage
-
+**Note:**  To use these scripts, copy the desired script file to your computer and and make ```Linux.sh``` for linux or ```Windows.ps1``` for windows and then  follow the instructions below to run it on your system.
 ### On Linux
 1. Open a terminal.
 2. Navigate to this directory:
