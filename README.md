@@ -4,8 +4,31 @@ This directory contains two scripts for different operating systems to help auto
 
 ## Scripts
 
-- **Linux.sh**: Bash script for Linux systems.
-- **Windows.ps1**: PowerShell script for Windows systems.
+### Linux.sh (Linux)
+This Bash script performs a comprehensive system cleanup on Linux systems. It:
+- Requires root privileges (run with sudo).
+- Cleans APT cache (autoremove, autoclean, clean).
+- Removes old systemd journal logs (older than 2 days).
+- Deletes thumbnail cache for all users.
+- Empties user and root trash bins.
+- Deletes temporary files in /tmp older than 1 day.
+- Clears browser caches (Google Chrome, Chromium, Firefox, Edge, Brave, Mozilla) for all users.
+- Cleans VS Code cache and logs for all users.
+- Summarizes and displays the total disk space recovered per category.
+
+### Windows.ps1 (Windows)
+This PowerShell script provides an interactive, user-friendly system cleaner for Windows. It:
+- Prompts the user before closing browsers (Chrome, Edge, Firefox).
+- Calculates and displays storage usage per app/cache before cleaning.
+- Cleans the following:
+   - Windows Temp folder (C:\Windows\Temp)
+   - User Temp folder (%TEMP%)
+   - Browser caches (Chrome, Edge, Firefox; closes browsers if running)
+   - App caches (Discord, Microsoft Teams)
+- For Temp folders, only deletes files older than 24 hours (safe mode).
+- For caches, deletes all files.
+- Shows a summary of space reclaimed for each category and the total.
+- Uses a modern UI with colored output and prompts.
 
 ## Usage
 
