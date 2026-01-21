@@ -1,4 +1,4 @@
-# Junk Directory Scripts
+# Junk Cleaner Directory Scripts
 
 This directory contains two scripts for different operating systems to help automate tasks or run commands specific to your environment.
 
