@@ -47,7 +47,7 @@ clean_task() {
 echo "----- System Cleanup Started -----"
 
 # ------------------ 1. APT ------------------
-CLEAN_CMD=(apt-get autoremove -y && apt-get autoclean -y && apt-get clean)
+CLEAN_CMD=(bash -c "apt-get autoremove -y && apt-get autoclean -y && apt-get clean")
 clean_task "APT Cache" /var/cache/apt/archives
 
 # ------------------ 2. JOURNAL LOGS ------------------
@@ -66,9 +66,9 @@ clean_task "Trash Bins" /home/*/.local/share/Trash /root/.local/share/Trash
 CLEAN_CMD=(find /tmp -type f -atime +1 -delete)
 clean_task "Temporary Files" /tmp
 
-# ------------------ 6. BROWSER CACHE (INCLUDES BRAVE) ------------------
+# ------------------ 6. BROWSER CACHE ------------------
 CLEAN_CMD=(bash -c '
-for d in /home/*/.cache/{google-chrome,chromium,mozilla,firefox,microsoft-edge,brave-browser}; do
+for d in /home/*/.cache/{google-chrome,chromium,mozilla,firefox,microsoft-edge}; do
     [ -d "$d" ] && rm -rf "$d"/*
 done
 ')
@@ -77,25 +77,24 @@ clean_task "Browser Cache" \
     /home/*/.cache/chromium \
     /home/*/.cache/mozilla \
     /home/*/.cache/firefox \
-    /home/*/.cache/microsoft-edge \
-    /home/*/.cache/brave-browser
+    /home/*/.cache/microsoft-edge
 
-# ------------------ 7. VS CODE CACHE & LOGS ------------------
+# ------------------ 7. BRAVE BROWSER CACHE ------------------
 CLEAN_CMD=(bash -c '
-for d in /home/*/.config/Code/logs \
-         /home/*/.config/Code/Crashpad \
-         /home/*/.config/Code/GPUCache \
-         /home/*/.config/Code/User/workspaceStorage \
-         /home/*/.cache/Code; do
+for d in /home/*/.cache/BraveSoftware/Brave-Browser; do
     [ -d "$d" ] && rm -rf "$d"/*
 done
 ')
-clean_task "VS Code Cache & Logs" \
-    /home/*/.config/Code/logs \
-    /home/*/.config/Code/Crashpad \
-    /home/*/.config/Code/GPUCache \
-    /home/*/.config/Code/User/workspaceStorage \
-    /home/*/.cache/Code
+clean_task "Brave Cache" \
+    /home/*/.cache/BraveSoftware/Brave-Browser
+
+# ------------------ 8. SNAP OLD REVISIONS ------------------
+CLEAN_CMD=(bash -c '
+snap list --all | awk "/disabled/{print \$1, \$3}" | while read snapname revision; do
+    snap remove "$snapname" --revision="$revision"
+done
+')
+clean_task "Old Snap Versions" /var/lib/snapd/snaps
 
 # ------------------ SUMMARY ------------------
 echo
@@ -112,4 +111,3 @@ done
 echo "---------------------------------------"
 printf "%-25s %15s\n" "TOTAL" "$(format_size "$total")"
 echo "---------------------------------------"
-
